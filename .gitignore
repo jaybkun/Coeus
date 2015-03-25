@@ -1,5 +1,7 @@
 #IDE artifacts
 .idea/
+*.iml
+npm-debug.log
 
 #Node components
 node_modules/
