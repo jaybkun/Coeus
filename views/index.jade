@@ -3,3 +3,9 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  div
+    button(ui-sref="home") Home
+    button(ui-sref="clustering") Clustering
+
+  div(ui-view)
