@@ -1,5 +1,11 @@
-#!/bin/bash
+OLD_HOME=$HOME
 
 ####################
 echo "INFO: running 'bower install'"
+cd $OPENSHIFT_REPO_DIR
+export HOME=$OPENSHIFT_REPO_DIR
 bower install
+
+#########
+export HOME=$OLD_HOME
+echo "INFO: HOME is $HOME"
