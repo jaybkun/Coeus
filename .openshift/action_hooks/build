@@ -1,3 +1,5 @@
 #!/bin/bash
 
+####################
+echo "INFO: running 'bower install'"
 bower install
