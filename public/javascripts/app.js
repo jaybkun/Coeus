@@ -14,5 +14,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('clustering', {
             url: '/clustering',
             templateUrl: '/views/clustering/clustering.html'
+        })
+        .state("socketio", {
+            url: '/socket.io',
+            templateUrl: '/views/socket.io/socket.io.html'
         });
 });
