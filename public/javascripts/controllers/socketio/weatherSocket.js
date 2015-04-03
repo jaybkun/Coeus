@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('socket.io', ['ngResource']);
+    var app = angular.module('weatherSocket', ['ngResource']);
 
     app.controller('weatherController', ['$scope', '$resource', function($scope, $resource) {
 
