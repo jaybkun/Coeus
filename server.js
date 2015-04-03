@@ -4,9 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var Promise = require('bluebird');
+var http = require('http');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var weather = require('./routes/weather');
 
 var app = express();
 
@@ -24,7 +26,9 @@ app.use(require('node-compass')({mode: 'expanded'}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api/weather', weather);
+app.use('/api/*', routes);
+app.use('/api', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -59,9 +63,67 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
-app.listen(server_port, server_ip_address, function(){
+var io = require('socket.io').listen(app.listen(server_port, server_ip_address, function(){
     console.log("Listening on " + server_ip_address + ", server_port " + server_port)
+}));
+
+io.sockets.on('connection', function(socket) {
+    socket.emit('message', {message: "the weather channel"});
+
+    socket.on('weatherUpdate:start', function(socket) {
+        startWeatherUpdates(socket);
+    });
+
+    socket.on('updateWeather:stop', function(socket) {
+        stopWeatherUpdates()
+    });
+
+    var updateTimer;
+    function startWeatherUpdates() {
+        if (updateTimer) return;
+        updateWeather();
+    }
+
+    function stopWeatherUpdates() {
+        clearInterval(updateTimer);
+        updateTimer = null;
+    }
+
+    function updateWeather() {
+
+        var options = {
+            host: 'api.openweathermap.org',
+            port: 80,
+            method: 'GET',
+            path: '/data/2.5/weather?zip=21017,us'
+        };
+
+        var req = http.request(options, function(res) {
+            var weatherData = "";
+            res.on('data', function(chunk) {
+                weatherData += chunk;
+            });
+            res.on('end', function(end) {
+                try {
+                    var weatherJSON = JSON.parse(weatherData);
+                    weatherJSON.timestamp = new Date();
+
+                    io.sockets.emit("weatherUpdate", weatherJSON);
+                } catch (err) {
+                    console.error("ERROR:" + err);
+                }
+            });
+            updateTimer = setTimeout(updateWeather, 1000);
+        }).on('error', function(error) {
+            console.error("ERROR: " + error.message);
+        });
+        req.end();
+    }
+
+
+
 });
+

@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('coeus', ['ui.router']);
+var app = angular.module('coeus', ['ui.router', 'socket.io']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
