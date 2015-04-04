@@ -23,8 +23,8 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "ssh://54a177f84382ec4537000081@coeus-draktheri.rhcloud.com/~/git/coeus.git/"
+    "url": "git@github.com:jaybkun/Coeus.git"
   },
-  "author": "",
+  "author": "Jay Barra <jay.f.barra@gmail.com>",
   "license": "MIT"
 }
