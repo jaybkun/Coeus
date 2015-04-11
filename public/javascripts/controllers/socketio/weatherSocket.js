@@ -6,7 +6,7 @@
     app.controller('weatherController', ['$scope', '$resource', function($scope, $resource) {
 
         // Establish connection
-        var socket = io.connect('http://coeus-draktheri.rhcloud.com:8080');
+        var socket = io.connect('http://coeus-draktheri.rhcloud.com:8000');
 
         socket.on('weatherUpdate', function(data) {
             $scope.weather = data;
