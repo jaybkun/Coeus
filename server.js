@@ -80,7 +80,7 @@ io.sockets.on('connection', function(socket) {
         startWeatherUpdates(socket);
     });
 
-    socket.on('updateWeather:stop', function(socket) {
+    socket.on('weatherUpdate:stop', function(socket) {
         stopWeatherUpdates()
     });
 
@@ -88,6 +88,7 @@ io.sockets.on('connection', function(socket) {
     function startWeatherUpdates() {
         if (updateTimer) return;
         updateWeather();
+        updateTimer = true;
     }
 
     function stopWeatherUpdates() {
@@ -96,6 +97,7 @@ io.sockets.on('connection', function(socket) {
     }
 
     function updateWeather() {
+        console.log("Getting Weather");
 
         var options = {
             host: 'api.openweathermap.org',
@@ -119,7 +121,9 @@ io.sockets.on('connection', function(socket) {
                     console.error("ERROR:" + err);
                 }
             });
-            updateTimer = setTimeout(updateWeather, 1000);
+            if (updateTimer) {
+                updateTimer = setTimeout(updateWeather, 1000);
+            }
         }).on('error', function(error) {
             console.error("ERROR: " + error.message);
         });

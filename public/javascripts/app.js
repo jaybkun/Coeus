@@ -1,6 +1,10 @@
 'use strict';
 
-var app = angular.module('coeus', ['ui.router', 'weatherSocket']);
+var app = angular.module('coeus', [
+    'ui.router',
+    'weatherSocket',
+    'coeus_services'
+]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
