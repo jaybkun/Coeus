@@ -2,6 +2,7 @@
 .idea/
 *.iml
 npm-debug.log
+.sass-cache/
 
 #Node components
 node_modules/
@@ -9,4 +10,4 @@ node_modules/
 #Public components
 public/.sass-cache/
 public/bower_components/
-public/stylesheets/style.css
+public/stylesheets/

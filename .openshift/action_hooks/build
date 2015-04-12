@@ -2,5 +2,9 @@
 ####################
 echo "INFO: running 'bower install'"
 cd $OPENSHIFT_REPO_DIR
+
 HOME=$OPENSHIFT_REPO_DIR bower install
+####################
+echo "INFO: running 'grunt'"
+HOME=$OPENSHIFT_REPO_DIR grunt
 

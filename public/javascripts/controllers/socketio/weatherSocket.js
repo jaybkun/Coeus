@@ -4,11 +4,20 @@
     var app = angular.module('weatherSocket', ['ngResource']);
 
 })();
-app.controller('weatherController', ['$scope', '$resource', 'SocketFactory', function($scope, $resource, SocketFactory) {
+app.controller('weatherController', ['$scope', 'SocketFactory', function($scope, SocketFactory) {
 
-    var socket = SocketFactory.createSocket();
+    var socket = SocketFactory.createSocket('/api/weather');
+
+    $scope.commLog = [];
+
+    socket.on('message', function(data) {
+        $scope.commLog.push(data);
+        $scope.message = data;
+        $scope.$apply();
+    });
 
     socket.on('weatherUpdate', function (data) {
+        $scope.commLog.push(data);
         $scope.weather = data;
         $scope.$apply();
     });
@@ -17,8 +26,10 @@ app.controller('weatherController', ['$scope', '$resource', 'SocketFactory', fun
     $scope.toggleWeatherUpdates  = function() {
         if ($scope.updatesEnabled) {
             socket.emit('weatherUpdate:stop', {});
+            $scope.commLog.push("updateWeather:stop");
         } else {
-            socket.emit('weatherUpdate:start', {});
+            socket.emit('weatherUpdate:start', {'zip': 21017});
+            $scope.commLog.push("updateWeather:start");
         }
         $scope.updatesEnabled = !$scope.updatesEnabled;
     };

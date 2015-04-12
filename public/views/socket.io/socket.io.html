@@ -1,9 +1,20 @@
 <h3>socket.io</h3>
 <div ng-controller="weatherController">
-    <button ng-click="toggleWeatherUpdates()">Toggle Weather Updates</button>
+    <button ng-click="toggleWeatherUpdates()">Toggle Weather Updates </button>
 
-    <div ng-show="updatesEnabled" id="weatherFrame">
-        <div ng-repeat="(key,value) in weather">{{key}} : {{value}}</div>
+    <div id="weatherFrame">
+        <div ng-repeat="(key,value) in weather">{{ key }} : {{ value }}</div>
     </div>
-    <div ng-hide="updatesEnabled">Updates Disabled</div>
+
+    <br>
+    <hr>
+    <div>{{ message }}</div>
+
+    <div>
+        <div ng-repeat="message in commLog track by $index " >
+            {{ message }}
+            <br>
+        </div>
+    </div>
+
 </div>

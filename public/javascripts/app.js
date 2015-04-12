@@ -2,6 +2,7 @@
 
 var app = angular.module('coeus', [
     'ui.router',
+    'mm.foundation',
     'weatherSocket',
     'coeus_services'
 ]);

@@ -1,33 +1,71 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head>
     <meta charset="UTF-8">
     <title>Coeus</title>
+
+    <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="/bower_components/foundation/js/foundation.js" type="text/javascript"></script>
+    <script src="/bower_components/modernizr/modernizr.js" type="text/javascript"></script>
+    <script src="/bower_components/underscore/underscore.js" type="text/javascript"></script>
+
+    <!-- Resolves from Node Server -->
+    <script src="/socket.io/socket.io.js" type="text/javascript"></script>
 
     <script src="/bower_components/angular/angular.js" type="text/javascript"></script>
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
     <script src="/bower_components/angular-resource/angular-resource.js" type="text/javascript"></script>
+    <script src="/bower_components/angular-foundation/mm-foundation-tpls.js" type="text/javascript"></script>
 
-    <script src="/socket.io/socket.io.js" type="text/javascript"></script>
-
-    <script src="/bower_components/underscore/underscore.js" type="text/javascript"></script>
-
+    <!-- Coeus Components -->
     <script src="/javascripts/app.js" type="text/javascript"></script>
     <script src="/javascripts/services/services.js" type="text/javascript"></script>
     <script src="/javascripts/services/SocketFactory.js" type="text/javascript"></script>
     <script src="/javascripts/controllers/socketio/weatherSocket.js" type="text/javascript"></script>
 
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/stylesheets/app.css"/>
+
 </head>
 <body ng-app="coeus">
 
-<p>simpler</p>
+<div id="wrapper">
+    <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a ui-sref="home">Coeus</a></h1>
+            </li>
+            <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+            <li class="toggle-topbar menu-icon"><a ui-sref="home"><span>Menu</span></a></li>
+        </ul>
 
-<button ui-sref="home">home</button>
-<button ui-sref="clustering">clustering</button>
-<button ui-sref="socketio">Socket.io</button>
+        <section class="top-bar-section">
+            <!-- Right Nav Section -->
+            <ul class="right">
+                <li><a ui-sref="home">Home</a></li>
+                <li><a ui-sref="clustering">Machine Learning</a></li>
+                <li class="has-dropdown">
+                    <a href="#">Socket.io</a>
+                    <ul class="dropdown">
+                        <li><a ui-sref="socketio">Weather</a></li>
+                        <li><a ui-sref="socketio">Chat</a></li>
+                        <li><a ui-sref="socketio">Charts</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </nav>
 
-<div ui-view>default</div>
 
+    <div class="mainContent">
+        <div ui-view></div>
+    </div>
 
+    <div id="push"></div>
+</div>
+
+<script>
+    $(document).foundation();
+</script>
 </body>
 </html>

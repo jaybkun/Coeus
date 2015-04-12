@@ -7,7 +7,7 @@
     var app = angular.module('SocketsFactory', []);
 
     /**
-     * Creates Sockets for socket.io application
+     * Creates Sockets for socket.io communication
      */
     app.factory('SocketFactory', function() {
         var connections = [
@@ -15,19 +15,17 @@
             'http://coeus-draktheri.rhcloud.com:8000'];
 
         return {
-            createSocket: function() {
+            createSocket: function(dest) {
                 var socket;
                 try {
                     angular.forEach(connections, function(connection) {
                         if (!socket) {
-                            socket = io.connect(connection);
+                            socket = io.connect(connection + dest);
                         }
                     });
-
                 } catch (err) {
                     console.err(err);
                 }
-
                 return socket;
             }
         }

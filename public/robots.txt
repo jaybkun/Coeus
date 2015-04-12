@@ -1,0 +1,4 @@
+User-agent: *
+
+Disallow:/javascripts
+Disallow:/bower_components
