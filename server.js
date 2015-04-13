@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var Promise = require('bluebird');
 var http = require('http');
 
-var routes = require('./routes/index');
+//var routes = require('./routes/index');
 
 var app = express();
 
@@ -19,9 +19,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('node-compass')({mode: 'expanded'}));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public/stylesheets')));
 
-app.use('/', routes);
+//app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
