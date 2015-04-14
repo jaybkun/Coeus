@@ -9157,3 +9157,32 @@ th.hide-for-touch {
     display: table-cell !important;
   }
 }
+/* line 3, ../../scss/app.scss */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* line 9, ../../scss/app.scss */
+#wrapper {
+  min-height: 100%;
+  position: relative;
+}
+
+/* line 14, ../../scss/app.scss */
+#mainContent {
+  padding-bottom: 50px;
+  /* Height of the footer element */
+}
+
+/* line 17, ../../scss/app.scss */
+footer {
+  background: #333333;
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
