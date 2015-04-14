@@ -11,8 +11,8 @@
      */
     app.factory('SocketFactory', function() {
         var connections = [
-            'http://localhost:8080',
-            'http://coeus-draktheri.rhcloud.com:8000'];
+            'http://coeus-draktheri.rhcloud.com:8000',
+            'http://localhost:8080'];
 
         return {
             createSocket: function(dest) {
