@@ -12,13 +12,14 @@ var http = require('http');
 var app = express();
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('node-compass')({mode: 'expanded'}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/stylesheets', express.static(path.join(__dirname, 'public/stylesheets')));
 //app.use('/', routes);
 
 // catch 404 and forward to error handler
@@ -66,4 +67,4 @@ io.sockets.on('connection', function(socket) {
     socket.emit('message', {'message': 'connected'});
 });
 
-var weather = require('./routes/weather')(io);
+require('./routes/weather')(io);
