@@ -1,24 +1,19 @@
+'use strict';
+
 /**
- * Created by Jay on 4/11/2015.
+ * Creates Sockets for socket.io communication
  */
-(function() {
-    'use strict';
-
-    var app = angular.module('SocketsFactory', []);
-
-    /**
-     * Creates Sockets for socket.io communication
-     */
-    app.factory('SocketFactory', function() {
+angular.module('SocketsFactory', []).
+    factory('SocketFactory', function () {
         var connections = [
             'http://coeus-draktheri.rhcloud.com:8000',
             'http://localhost:8080'];
 
         return {
-            createSocket: function(dest) {
+            createSocket: function (dest) {
                 var socket;
                 try {
-                    angular.forEach(connections, function(connection) {
+                    angular.forEach(connections, function (connection) {
                         if (!socket) {
                             socket = io.connect(connection + dest);
                         }
@@ -30,5 +25,3 @@
             }
         }
     });
-
-})();

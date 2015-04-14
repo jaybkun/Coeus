@@ -1,20 +1,32 @@
-<h3>socket.io</h3>
-<div ng-controller="weatherController">
-    <button ng-click="toggleWeatherUpdates()">Toggle Weather Updates </button>
-
-    <div id="weatherFrame">
-        <div ng-repeat="(key,value) in weather">{{ key }} : {{ value }}</div>
+<div class="row">
+    <div class="small-12 columns">
+        <h3>socket.io</h3>
     </div>
+</div>
 
-    <br>
-    <hr>
-    <div>{{ message }}</div>
-
-    <div>
-        <div ng-repeat="message in commLog track by $index " >
-            {{ message }}
-            <br>
+<div class="row">
+    <div class="small-3 columns">
+        <button ng-click="toggleWeatherUpdates()">Toggle Weather Updates </button>
+    </div>
+    <div class="small-9 columns">
+        <div class="row">
+            <div class="small-12 columns">
+                <div id="weatherFrame">
+                    <div ng-repeat="(key,value) in weather">{{ key }} : {{ value }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-12 columns">
+                {{ message }}
+            </div>
         </div>
     </div>
+</div>
+<hr/>
 
+<div class="row" ng-repeat="m in commLog track by $index">
+    <div class="small-12 columns">
+        {{ m }}
+    </div>
 </div>

@@ -1,8 +1,4 @@
-(function() {
-    'use strict';
+'use strict';
 
-    var app = angular.module('coeus_services', [
-        'SocketsFactory'
-    ]);
-})();
+angular.module('coeus_services', ['SocketsFactory']);
 

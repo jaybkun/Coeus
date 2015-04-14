@@ -3,7 +3,7 @@
 var app = angular.module('coeus', [
     'ui.router',
     'mm.foundation',
-    'weatherSocket',
+    'weatherController',
     'coeus_services'
 ]);
 
@@ -22,6 +22,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         })
         .state("socketio", {
             url: '/socket.io',
-            templateUrl: '/views/socket.io/socket.io.html'
+            templateUrl: '/views/socket.io/socket.io.html',
+            controller: 'weatherController'
         });
 });
