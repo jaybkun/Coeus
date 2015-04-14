@@ -63,3 +63,11 @@ io.sockets.on('connection', function(socket) {
 });
 
 require('./routes/weather')(io);
+
+var exec = require('child_process').exec;
+exec('git log -1 --format="Git commit <%H> %cd"', function(err, stdout, stderr) {
+    console.log(stdout);
+    if (err) {
+        console.error(stderr);
+    }
+});
