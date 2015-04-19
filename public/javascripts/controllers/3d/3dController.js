@@ -11,6 +11,19 @@ angular.module('3d',[])
             intensity: 1.35
         };
 
+        $scope.cube = {
+            rotation: {
+                x: 0.01,
+                y: 0.00,
+                z: 0.0
+            },
+            pos: {
+                x: 0,
+                y: 1,
+                z: 0
+            }
+        };
+
         var scene = new THREE.Scene();
         //var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         var camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
@@ -68,8 +81,13 @@ angular.module('3d',[])
         function render() {
             requestAnimationFrame( render );
 
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.02;
+            cube.rotation.x += $scope.cube.rotation.x;
+            cube.rotation.y += $scope.cube.rotation.y;
+            cube.rotation.z += $scope.cube.rotation.z;
+
+            cube.position.x = $scope.cube.pos.x;
+            cube.position.y = $scope.cube.pos.y;
+            cube.position.z = $scope.cube.pos.z;
 
             renderer.render( scene, camera );
         }
@@ -88,7 +106,22 @@ angular.module('3d',[])
             $scope.light.y = 1;
             $scope.light.z = -1;
             $scope.light.intensity = 1.35
-        }
+        };
+
+        $scope.resetCube = function() {
+            $scope.cube = {
+                rotation: {
+                    x: 0.01,
+                    y: 0.00,
+                    z: 0.0
+                },
+                pos: {
+                    x: 0,
+                    y: 1,
+                    z: 0
+                }
+            };
+        };
 
 
     }]);

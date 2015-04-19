@@ -33,7 +33,66 @@
         </div>
 
     </div>
-    <div class="large-8 small-4 columns">
-        <div id="stage"></div>
+    <div class="large-8 small-8 columns">
+        <div id="stage">
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="small-6 columns">
+        <div class="row">
+            <div class="small-12 small-centered">
+                Position
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-5 columns"><label for="cube_x">Cube X</label></div>
+            <div class="small-7 columns"><input id="cube_x" type="number" step="0.01" ng-model="cube.pos.x"/></div>
+        </div>
+
+        <div class="row">
+            <div class="small-5 columns"><label for="cube_y">Cube Y</label></div>
+            <div class="small-7 columns"><input id="cube_y" type="number" step="0.01" ng-model="cube.pos.y"/></div>
+        </div>
+
+        <div class="row">
+            <div class="small-5 columns"><label for="cube_z">Cube Z</label></div>
+            <div class="small-7 columns"><input id="cube_z" type="number" step="0.01" ng-model="cube.pos.z"/></div>
+        </div>
+
+        <div class="row">
+            <div class="small-12 columns">
+                <button ng-click="resetCube()">Reset</button>
+            </div>
+        </div>
+    </div>
+    <div class="small-6 columns">
+        <div class="row">
+            <div class="small-12 small-centered">
+                Rotation
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-5 columns"><label for="cube_rotation_x">Cube X</label></div>
+            <div class="small-7 columns"><input id="cube_rotation_x" type="number" step="0.01" ng-model="cube.rotation.x"/></div>
+        </div>
+
+        <div class="row">
+            <div class="small-5 columns"><label for="cube_rotation_y">Cube Y</label></div>
+            <div class="small-7 columns"><input id="cube_rotation_y" type="number" step="0.01" ng-model="cube.rotation.y"/></div>
+        </div>
+
+        <div class="row">
+            <div class="small-5 columns"><label for="cube_rotation_z">Cube Z</label></div>
+            <div class="small-7 columns"><input id="cube_rotation_z" type="number" step="0.01" ng-model="cube.rotation.z"/></div>
+        </div>
+
+        <div class="row">
+            <div class="small-12 columns">
+                <button ng-click="resetCube()">Reset</button>
+            </div>
+        </div>
+
     </div>
 </div>
