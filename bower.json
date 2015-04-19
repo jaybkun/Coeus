@@ -41,6 +41,7 @@
     "underscore": "~1.8.3",
     "foundation": "~5.5.1",
     "angular-foundation": "~0.5.1",
-    "modernizr": "~2.8.3"
+    "modernizr": "~2.8.3",
+    "threejs": "*"
   }
 }
