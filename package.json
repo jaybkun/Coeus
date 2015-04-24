@@ -24,7 +24,9 @@
     "socket.io": "^1.3.5"
   },
   "description": "Coeus =====",
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt-include-source": "^0.5.1"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:jaybkun/Coeus.git"

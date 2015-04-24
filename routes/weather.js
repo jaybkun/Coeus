@@ -1,3 +1,5 @@
+'use strict';
+
 var http = require('http');
 var weatherSockets = function(io) {
     var weather = io.

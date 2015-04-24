@@ -1,4 +1,6 @@
 'use strict';
 
-angular.module('coeus_services', ['SocketsFactory']);
+angular.module('CoeusServices', [
+    'SocketsFactory'
+]);
 

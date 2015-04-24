@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('weatherController', []).
+angular.module('WeatherControllerModule', []).
     controller('weatherController', ['$scope', 'SocketFactory', function ($scope, SocketFactory) {
 
         var socket = SocketFactory.createSocket('/api/weather');

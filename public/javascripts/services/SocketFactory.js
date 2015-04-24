@@ -6,7 +6,7 @@
 angular.module('SocketsFactory', []).
     factory('SocketFactory', function () {
         var connections = [
-            'http://coeus-draktheri.rhcloud.com:8000',
+            /*'http://coeus-draktheri.rhcloud.com:8000',*/
             'http://localhost:8080'];
 
         return {
@@ -23,5 +23,5 @@ angular.module('SocketsFactory', []).
                 }
                 return socket;
             }
-        }
+        };
     });

@@ -1,7 +1,6 @@
-/**
- * Created by Jay on 4/19/2015.
- */
-angular.module('3d',[])
+'use strict';
+
+angular.module('3dControllerModule',[])
     .controller('3dController', ['$scope', function($scope){
         $scope.light = {
             x: 1,

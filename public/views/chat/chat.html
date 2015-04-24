@@ -1,0 +1,19 @@
+<div class="row">
+    <div class="small-12 columns panel">
+        <div class="row">
+            <div class="small-12 columns">
+                <ul style="list-style:none;">
+                    <li ng-repeat="entry in messageLog">{{entry.message}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-10 columns">
+                <input type="text" id="message" ng-model="message" placeholder="Type your message here"/>
+            </div>
+            <div class="small-2 columns">
+                <button class="round tiny expand" ng-click="sendMessage()" ng-enabled="message.length >= 1">Send</button>
+            </div>
+        </div>
+    </div>
+</div>

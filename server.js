@@ -1,33 +1,45 @@
+'use strict';
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var Promise = require('bluebird');
+//var bluebird = require('bluebird');
 var http = require('http');
 
+var routes = require('./routes/index.js');
+
 var app = express();
+
+app.use('/', routes);
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-//app.use(require('node-compass')({mode: 'expanded'}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next ) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
+
+app.use(routes);
+
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
+    app.use(function(err, req, res) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -37,8 +49,8 @@ if (app.get('env') === 'development') {
 }
 
 // production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+// no stacktrace leaked to user
+app.use(function(err, req, res) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
@@ -63,6 +75,7 @@ io.sockets.on('connection', function(socket) {
 });
 
 require('./routes/weather')(io);
+require('./routes/chat')(io);
 
 var exec = require('child_process').exec;
 exec('git log -1 --format="Git commit <%H> %cd"', function(err, stdout, stderr) {
