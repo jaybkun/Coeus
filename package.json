@@ -25,11 +25,25 @@
   },
   "description": "Coeus =====",
   "devDependencies": {
-    "grunt-include-source": "^0.5.1"
+    "grunt-include-source": "^0.5.1",
+    "jasmine": "^2.2.1",
+    "jasmine-core": "^2.2.0",
+    "karma-chrome-launcher": "^0.1.8",
+    "karma-jasmine": "^0.3.5"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:jaybkun/Coeus.git"
+  },
+  "jshintConfig": {
+    "ignorePaths": [
+      "public/stylesheets"
+    ],
+    "globals": {
+      "$": true,
+      "angular": true,
+      "node": true
+    }
   },
   "author": "Jay Barra <jay.f.barra@gmail.com>",
   "license": "MIT"

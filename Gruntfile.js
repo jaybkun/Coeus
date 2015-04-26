@@ -4,13 +4,36 @@ module.exports = function(grunt) {
         compass: {
             dist: {
                 options: {
-                    sassDir: 'scss',
-                    cssDir: 'public/stylesheets'
+                    config: 'config.rb'
+                }
+            }
+        },
+        watch: {
+          scripts: {
+              files: ['public/**/*.js]'],
+              tasks: ['default'],
+              options: {
+                  spawn: false
+              }
+          }
+        },
+        includeSource: {
+            options: {
+                basePath: 'public',
+                html: {
+                    js: '<script src="{filePath}" type="text/javascript">'
+                }
+            },
+            default: {
+                files: {
+                    'public/index.html': 'public/index.tmpl.html'
                 }
             }
         }
     });
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.registerTask('default',['compass']);
+    grunt.loadNpmTasks('grunt-include-source');
+
+    grunt.registerTask('default',['compass', 'includeSource']);
 };

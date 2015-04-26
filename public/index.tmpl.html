@@ -4,31 +4,13 @@
     <meta charset="UTF-8">
     <title>Coeus</title>
 
-    <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-    <script src="/bower_components/foundation/js/foundation.js" type="text/javascript"></script>
-    <script src="/bower_components/modernizr/modernizr.js" type="text/javascript"></script>
-    <script src="/bower_components/underscore/underscore.js" type="text/javascript"></script>
-
-    <!-- Resolves from Node Server -->
-    <script src="/socket.io/socket.io.js" type="text/javascript"></script>
-
-    <script src="/bower_components/threejs/build/three.min.js" type="text/javascript"></script>
-
-    <script src="/bower_components/angular/angular.js" type="text/javascript"></script>
-    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
-    <script src="/bower_components/angular-resource/angular-resource.js" type="text/javascript"></script>
-    <script src="/bower_components/angular-foundation/mm-foundation-tpls.js" type="text/javascript"></script>
-
-    <!-- Coeus Components -->
-
-
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/stylesheets/app.css" type="text/css"/>
 
 </head>
 <body ng-app="coeus">
 
-<div id="wrapper" ng-controller="coeusMainController">
+<div id="wrapper" ng-controller="CoeusMainController">
     <nav class="top-bar" data-topbar role="navigation">
         <ul class="title-area">
             <li class="name">
@@ -44,11 +26,10 @@
                 <li><a ui-sref="home">Home</a></li>
                 <li><a ui-sref="clustering">Machine Learning</a></li>
                 <li class="has-dropdown">
-                    <a ui-sref="socketio">Socket.io</a>
+                    <a ui-sref="rt">Socket.io</a>
                     <ul class="dropdown">
-                        <li><a ui-sref="socketio">Weather</a></li>
-                        <li><a ui-sref="socketio">Chat</a></li>
-                        <li><a ui-sref="socketio">Charts</a></li>
+                        <li><a ui-sref="rt.weather">Weather</a></li>
+                        <li><a ui-sref="rt.chat">Chat</a></li>
                     </ul>
                 </li>
                 <li><a ui-sref="3d">3D Javascript</a></li>
@@ -57,7 +38,6 @@
         </section>
     </nav>
 
-
     <div class="mainContent">
         <div ui-view></div>
     </div>
@@ -65,19 +45,40 @@
     <footer>
         <div class="row">
             <div class="large-12 small-12 columns">
-                <a href="https://github.com/jaybkun/Coeus">Coeus@GitHub</a></footer>
+                <a href="https://github.com/jaybkun/Coeus">Coeus@GitHub</a>
             </div>
         </div>
         <div class="row">
-            <div class="large-12 small-12 columns">
-                {{ coeus.git.hash }}
+            <div class="large-12 small-12 columns" ng-cloak>
+                ed2677340d1e206ff61b5344ed455c20dd53bcf9
+                <a href="{{ 'https://github.com/jaybkun/Coeus/commit/' + git.hash }}"  >{{ git.date }} : {{ git.hash }}</a>
             </div>
         </div>
-
+    </footer>
 </div>
+
+<!-- Bower Components -->
+<script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="/bower_components/foundation/js/foundation.js" type="text/javascript"></script>
+<script src="/bower_components/modernizr/modernizr.js" type="text/javascript"></script>
+<script src="/bower_components/underscore/underscore.js" type="text/javascript"></script>
+
+<!-- Resolves from Node Server -->
+<script src="/socket.io/socket.io.js" type="text/javascript"></script>
+
+<script src="/bower_components/threejs/build/three.min.js" type="text/javascript"></script>
+
+<script src="/bower_components/angular/angular.js" type="text/javascript"></script>
+<script src="/bower_components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
+<script src="/bower_components/angular-resource/angular-resource.js" type="text/javascript"></script>
+<script src="/bower_components/angular-foundation/mm-foundation-tpls.js" type="text/javascript"></script>
+
+<!-- Coeus Components -->
+<!-- include: "type": "js", "files": "javascripts/**/*.js" -->
 
 <script>
     $(document).foundation();
 </script>
+
 </body>
 </html>

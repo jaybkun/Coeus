@@ -1,7 +1,9 @@
-'use strict';
-
-angular.module('CoeusControllers', [
-    '3dControllerModule',
-    'ChatControllerModule',
-    'WeatherControllerModule'
-]);
+(function() {
+    /**
+     *
+     */
+    angular.module('CoeusControllers', [
+        '3dControllerModule',
+        'WeatherControllerModule'
+    ]);
+})();

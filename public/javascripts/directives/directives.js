@@ -4,7 +4,7 @@
     /**
      *
      */
-    angular.module('CoeusServices', [
-        'SocketsFactory'
+    angular.module('CoeusDirectives', [
+        'ChatWindowModule'
     ]);
 })();
