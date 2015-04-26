@@ -5,6 +5,7 @@
         'ui.router',
         'mm.foundation',
         'ngResource',
+        'luegg.directives',
         'CoeusControllers',
         'CoeusServices',
         'CoeusDirectives'

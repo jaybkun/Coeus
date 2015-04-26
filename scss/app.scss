@@ -23,3 +23,15 @@ footer {
   bottom:0;
   left:0;
 }
+
+.chatArea {
+  min-height: 200px;
+  max-height: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-shadow: inset 3px 3px 2px black;
+
+  ul {
+    list-style: none;
+  }
+}

@@ -5,6 +5,7 @@
      *
      */
     angular.module('CoeusDirectives', [
-        'ChatWindowModule'
+        'ChatWindowModule',
+        'ngEnterModule'
     ]);
 })();

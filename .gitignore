@@ -10,5 +10,5 @@ node_modules/
 #Public components
 public/.sass-cache/
 public/bower_components/
-
+public/bower/stylesheets/
 public/index.html

@@ -1,11 +1,12 @@
 (function() {
     'use strict';
+
     var http = require('http');
-    var weatherSockets = function(io) {
+    module.exports = function(io) {
         var weather = io.
             of('/api/weather').
             on('connection', function (socket) {
-                socket.emit('message', {'message':'connected to the weather channel'});
+                console.log('new weather connection');
 
                 var updateTimer;
                 socket.on('weatherUpdate:start', function(params) {
@@ -52,8 +53,6 @@
                 }
             });
     };
-
-    module.exports = weatherSockets;
 })();
 
 
