@@ -15,7 +15,11 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="small-9 columns"><input type="text" id="message" ng-enter="sendMessage()" ng-model="message"/></div>
-    <div class="small-3 columns"><button ng-click="sendMessage()" class="small round extend">Send</button></div>
+<div class="row collapse postfix-radius">
+    <div class="small-9 columns">
+        <input type="text" id="message" ng-enter="sendMessage()" ng-model="message"/>
+    </div>
+    <div class="small-3 columns">
+        <button ng-click="sendMessage()" class="postfix">Send</button>
+    </div>
 </div>
