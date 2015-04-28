@@ -1,16 +1,12 @@
 (function() {
     'use strict';
 
-    /**
-     *
-     */
     angular.module('WeatherControllerModule', []).
         controller('WeatherController', ['$scope', 'SocketFactory', function ($scope, SocketFactory) {
 
             var socket = SocketFactory.createSocket('/api/weather');
 
             $scope.commLog = [];
-
 
             socket.on('message', function (data) {
                 $scope.commLog.push(data);
@@ -46,9 +42,6 @@
                 lastMessage.fadeTo(0, 1);
                 lastMessage.fadeOut(5000, 'linear');
             };
-
-
-
 
         }]);
 })();
