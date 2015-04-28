@@ -18,6 +18,8 @@
                 $scope.commLog.push(data);
                 $scope.weather = data;
                 $scope.$apply();
+
+                startCountdown();
             });
 
             $scope.updatesEnabled = false;
@@ -41,6 +43,22 @@
                 lastMessage.stop();
                 lastMessage.fadeTo(0, 1);
                 lastMessage.fadeOut(5000, 'linear');
+            };
+
+            $scope.updateCountdown = 0;
+            var updateCountdownTimer = function() {
+                if (!$scope.updatesEnabled) {
+                    return;
+                }
+                $scope.updateCountdown -= 1;
+                $scope.$apply();
+                setTimeout(updateCountdownTimer, 1000);
+            };
+
+            var startCountdown = function() {
+                $scope.updateCountdown = 60;
+                $scope.$apply();
+                updateCountdownTimer();
             };
 
         }]);
