@@ -6,7 +6,6 @@
         var weather = io.
             of('/api/weather').
             on('connection', function (socket) {
-                console.log('new weather connection');
 
                 var updateTimer;
                 socket.on('weatherUpdate:start', function(params) {

@@ -7,7 +7,6 @@
     var logger = require('morgan');
     var cookieParser = require('cookie-parser');
     var bodyParser = require('body-parser');
-    //var bluebird = require('bluebird');
     var http = require('http');
 
     var routes = require('./routes/index.js');
@@ -15,10 +14,6 @@
     var app = express();
 
     app.use('/', routes);
-
-    // view engine setup
-    app.set('views', path.join(__dirname, 'views'));
-    app.set('view engine', 'jade');
 
     app.use(favicon(__dirname + '/public/favicon.ico'));
     app.use(logger('dev'));
@@ -69,15 +64,8 @@
     require('./routes/chat')(io);
     require('./routes/weather')(io);
 
-    io.on('connection', function(socket) {
-        console.log('new connection');
-        socket.emit('new message', {'message' : 'hi'});
-    });
-
     server.listen(server_port, server_ip_address, function() {
         console.log("Listening on " + server_ip_address + ", server_port " + server_port);
     });
-
-
 
 })();

@@ -6,6 +6,6 @@ cd $OPENSHIFT_REPO_DIR
 HOME=$OPENSHIFT_REPO_DIR bower prune
 HOME=$OPENSHIFT_REPO_DIR bower install
 ####################
-#echo "INFO: running 'grunt'"
-#HOME=$OPENSHIFT_REPO_DIR grunt
+#echo "INFO: running 'grunt includeSource'"
+HOME=$OPENSHIFT_REPO_DIR grunt includeSource
 
