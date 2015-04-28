@@ -30,7 +30,8 @@
             }).
             state('rt.weather', {
                 url: '/weather',
-                templateUrl: '/views/rt/weather.html'
+                templateUrl: '/views/rt/weather.html',
+                controller: 'WeatherController'
             }).
             state('rt.chat', {
                 url: '/chat',

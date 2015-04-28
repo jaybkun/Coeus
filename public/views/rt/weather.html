@@ -1,17 +1,8 @@
 <div class="row">
-    <div class="small-12 columns">
-        <h3>socket.io</h3>
-    </div>
-</div>
-
-<div ui-view></div>
-
-
-<div class="row">
-    <div class="small-3 columns">
+    <div class="small-4 columns">
         <button ng-click="toggleWeatherUpdates()">Toggle Weather Updates </button>
     </div>
-    <div class="small-9 columns">
+    <div class="small-8 columns">
         <div class="row">
             <div class="small-12 columns">
                 <div id="weatherFrame">
@@ -19,17 +10,13 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="small-12 columns">
-                {{ message }}
-            </div>
-        </div>
     </div>
 </div>
+
 <hr/>
 
-<div class="row" ng-repeat="m in commLog track by $index">
-    <div class="small-12 columns">
-        {{ m }}
+<div class="row" id="lastMessage">
+    <div class="small-12 columns" >
+        {{ lastMessage }}
     </div>
 </div>
