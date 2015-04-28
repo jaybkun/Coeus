@@ -46,16 +46,19 @@
             };
 
             $scope.updateCountdown = 0;
+            var updateTimer = null;
             var updateCountdownTimer = function() {
                 if (!$scope.updatesEnabled) {
                     return;
                 }
                 $scope.updateCountdown -= 1;
                 $scope.$apply();
-                setTimeout(updateCountdownTimer, 1000);
+                updateTimer = setTimeout(updateCountdownTimer, 1000);
             };
 
             var startCountdown = function() {
+                clearTimeout(updateTimer);
+                updateTimer = null;
                 $scope.updateCountdown = 60;
                 $scope.$apply();
                 updateCountdownTimer();
