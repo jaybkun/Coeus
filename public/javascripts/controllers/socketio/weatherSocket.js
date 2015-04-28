@@ -40,9 +40,11 @@
 
             var fadeMessage = function(message) {
                 $scope.lastMessage = message;
-                $('#lastMessage').stop();
-                $('#lastMessage').fadeTo(0, 1);
-                $('#lastMessage').fadeOut(5000, 'linear');
+
+                var lastMessage = $('#lastMessage');
+                lastMessage.stop();
+                lastMessage.fadeTo(0, 1);
+                lastMessage.fadeOut(5000, 'linear');
             };
 
 
