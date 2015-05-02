@@ -1,79 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
     <title>Coeus</title>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/stylesheets/app.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="stylesheets/app.css" type="text/css"/>
 
 </head>
 <body ng-app="coeus">
 
-<div id="wrapper" ng-controller="CoeusMainController">
-    <nav class="top-bar" data-topbar role="navigation">
-        <ul class="title-area">
-            <li class="name">
-                <h1><a ui-sref="home">Coeus</a></h1>
-            </li>
-            <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-            <li class="toggle-topbar menu-icon"><a ui-sref="home"><span>Menu</span></a></li>
-        </ul>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" ui-sref="home">Coeus</a>
+        </div>
 
-        <section class="top-bar-section">
-            <!-- Right Nav Section -->
-            <ul class="right">
-                <li><a ui-sref="home">Home</a></li>
-                <li><a ui-sref="clustering">Machine Learning</a></li>
-                <li class="has-dropdown">
-                    <a ui-sref="rt">Socket.io</a>
-                    <ul class="dropdown">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a ui-sref="3d">3D Work</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Socket.io <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
                         <li><a ui-sref="rt.weather">Weather</a></li>
+                        <li><a ui-sref="rt.chat">Chat</a></li>
+                        <li class="divider"></li>
                         <li><a ui-sref="rt.chat">Chat</a></li>
                     </ul>
                 </li>
-                <li><a ui-sref="3d">3D Javascript</a></li>
-                <li><a ui-sref="about">About</a></li>
             </ul>
-        </section>
-    </nav>
-
-    <div class="mainContent">
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="row">
+    <div class="col-sm-12">
         <div ui-view></div>
     </div>
-
-    <footer>
-        <div class="row">
-            <div class="large-12 small-12 columns">
-                <a href="https://github.com/jaybkun/Coeus">Coeus@GitHub</a>
-            </div>
-        </div>
-    </footer>
 </div>
 
 <!-- Bower Components -->
-<script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-<script src="/bower_components/foundation/js/foundation.js" type="text/javascript"></script>
-<script src="/bower_components/modernizr/modernizr.js" type="text/javascript"></script>
-<script src="/bower_components/underscore/underscore.js" type="text/javascript"></script>
+<script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="bower_components/modernizr/modernizr.js" type="text/javascript"></script>
+<script src="bower_components/underscore/underscore.js" type="text/javascript"></script>
 
 <!-- Resolves from Node Server -->
-<script src="/socket.io/socket.io.js" type="text/javascript"></script>
+<script src="socket.io/socket.io.js" type="text/javascript"></script>
 
-<script src="/bower_components/threejs/build/three.min.js" type="text/javascript"></script>
+<script src="bower_components/threejs/build/three.min.js" type="text/javascript"></script>
 
-<script src="/bower_components/angular/angular.js" type="text/javascript"></script>
-<script src="/bower_components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
-<script src="/bower_components/angular-resource/angular-resource.js" type="text/javascript"></script>
-<script src="/bower_components/angular-foundation/mm-foundation-tpls.js" type="text/javascript"></script>
-<script src="/bower_components/angular-scroll-glue/src/scrollglue.js" type="text/javascript"></script>
+<script src="bower_components/angular/angular.js" type="text/javascript"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
+<script src="bower_components/angular-resource/angular-resource.js" type="text/javascript"></script>
+<script src="bower_components/angular-scroll-glue/src/scrollglue.js" type="text/javascript"></script>
 
 <!-- Coeus Components -->
 <!-- include: "type": "js", "files": "javascripts/**/*.js" -->
-
-<script>
-    $(document).foundation();
-</script>
 
 </body>
 </html>

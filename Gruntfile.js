@@ -13,7 +13,7 @@
             },
             watch: {
                 scripts: {
-                    files: ['public/**/*.js]'],
+                    files: ['public/**/*.js', 'public/index.tmpl.html'],
                     tasks: ['default'],
                     options: {
                         spawn: false

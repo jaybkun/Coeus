@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="small-9 columns">
+    <div class="col-sm-9">
         <div class="chatArea" scroll-glue>
             <ul>
                 <li ng-repeat="message in messageLog track by $index">{{message}}</li>
@@ -7,7 +7,7 @@
             <div id="chatBottom"></div>
         </div>
     </div>
-    <div class="small-3 columns">
+    <div class="col-sm-3">
         <div class="chatUserList">
             <ul>
                 <li ng-repeat="user in chatUsers">{{user}}</li>
@@ -15,11 +15,11 @@
         </div>
     </div>
 </div>
-<div class="row collapse postfix-radius">
-    <div class="small-9 columns">
+<div class="row">
+    <div class="col-sm-9">
         <input type="text" id="message" ng-enter="sendMessage()" ng-model="message"/>
     </div>
-    <div class="small-3 columns">
-        <button ng-click="sendMessage()" class="postfix">Send</button>
+    <div class="col-sm-3">
+        <button ng-click="sendMessage()">Send</button>
     </div>
 </div>

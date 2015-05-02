@@ -3,13 +3,16 @@
 
     var app = angular.module('coeus', [
         'ui.router',
-        'mm.foundation',
         'ngResource',
         'luegg.directives',
         'CoeusControllers',
         'CoeusServices',
         'CoeusDirectives'
     ]);
+
+    app.run(['$rootScope', function($rootScope) {
+
+    }]);
 
     app.config(function($stateProvider, $urlRouterProvider) {
 
@@ -26,7 +29,7 @@
             }).
             state('rt', {
                 url: '/socket.io',
-                template: '<div class="row"><div ui-view class="small-12 columns">Socket.io Examples</div></div>'
+                template: '<div class="row"><div ui-view class="col-sm-12">Socket.io Examples</div></div>'
             }).
             state('rt.weather', {
                 url: '/weather',
