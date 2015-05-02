@@ -59,7 +59,7 @@
             scene.add( directionalLight );
 
             directionalLight.castShadow = true;
-            // directionalLight.shadowCameraVisible = true;
+            directionalLight.shadowCameraVisible = true;
 
             var d = 1;
             directionalLight.shadowCameraLeft = -d;

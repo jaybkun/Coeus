@@ -1,0 +1,19 @@
+@import "settings";
+
+.chatArea {
+  min-height: 50rem;
+  max-height: 50rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-shadow: inset 1rem 1rem 1rem black;
+
+  ul {
+    list-style: none;
+  }
+}
+
+.light-controls {
+  .input-group-addon {
+    min-width: 8rem;
+  }
+}
