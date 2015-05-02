@@ -42,6 +42,8 @@
     "modernizr": "~2.8.3",
     "threejs": "*",
     "angular-scroll-glue": "~2.0.5",
-    "bootstrap": "~3.3.4"
+    "bootstrap": "~3.3.4",
+    "threex": "*",
+    "threex.keyboardstate": "*"
   }
 }

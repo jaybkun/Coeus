@@ -7,94 +7,145 @@
     angular.module('3dControllerModule',[])
         .controller('3dController', ['$scope', function($scope){
             $scope.light = {
-                x: 1,
-                y: 1,
-                z: -1,
+                pos: {
+                    x: 1,
+                    y: 1,
+                    z: -1
+                },
                 color: 0xffffff,
                 intensity: 1.35
             };
 
             $scope.cube = {
-                rotation: {
-                    x: 0.01,
-                    y: 0.00,
-                    z: 0.0
-                },
                 pos: {
                     x: 0,
                     y: 1,
                     z: 0
+                },
+                rotation: {
+                    x: 0.01,
+                    y: 0.00,
+                    z: 0.0
                 }
             };
 
-            var scene = new THREE.Scene();
-            //var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            var camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+            // Global objects
+            var container, scene, camera, renderer, controls, stats;
+            var keyboard = new THREEx.KeyboardState();
+            var clock = new THREE.Clock();
 
-            var renderer = new THREE.WebGLRenderer();
-            renderer.setSize(300, 300);
-            renderer.shadowMapEnabled = true;
+            // Common objects
+            var floor, cube;
+            var directionalLight;
 
-            var floor = new THREE.Mesh(
-                new THREE.PlaneBufferGeometry( 40, 40 ),
-                new THREE.MeshPhongMaterial( { color: 0x999999, specular: 0x101010 } )
-            );
-            floor.rotation.x = -Math.PI/2;
-            floor.position.y = -0.5;
-            scene.add( floor );
+            init();
+            animate();
 
-            floor.receiveShadow = true;
+            function init() {
+                var SCREEN_WIDTH = window.innerWidth;
+                var SCREEN_HEIGHT = window.innerHeight * 0.6;
+                var VIEW_ANGLE = 75;
+                var ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT;
+                var NEAR = 0.1;
+                var FAR = 20000;
 
-            var geometry = new THREE.BoxGeometry(2,2,2);
-            var material = new THREE.MeshPhongMaterial({color:0x00ff00, specular: 0x101010});
-            var cube = new THREE.Mesh(geometry, material);
-            cube.castShadow = true;
-            scene.add(cube);
-            camera.position.z = 5;
+                // Create the scene
+                scene = new THREE.Scene();
 
-            scene.add( new THREE.AmbientLight( 0x777777) );
+                // Create the camera
+                camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+                scene.add(camera);
+                camera.position.set(0, 150, 400);
+                camera.lookAt(scene.position);
 
-            var directionalLight = new THREE.DirectionalLight( $scope.light.color, $scope.light.intensity);
-            directionalLight.position.set($scope.light.x, $scope.light.y, $scope.light.z);
-            scene.add( directionalLight );
+                // Create the renderer
+                renderer = new THREE.WebGLRenderer();
+                renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+                renderer.shadowMapEnabled = true;
 
-            directionalLight.castShadow = true;
-            directionalLight.shadowCameraVisible = true;
+                container = document.getElementById('three_container');
+                container.appendChild(renderer.domElement);
 
-            var d = 1;
-            directionalLight.shadowCameraLeft = -d;
-            directionalLight.shadowCameraRight = d;
-            directionalLight.shadowCameraTop = d;
-            directionalLight.shadowCameraBottom = -d;
+                // Create event listeners
+                // TODO fullscreen event
+                // TODO resize event
 
-            directionalLight.shadowCameraNear = 1;
-            directionalLight.shadowCameraFar = 4;
+                // Create Controls
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-            directionalLight.shadowMapWidth = 1024;
-            directionalLight.shadowMapHeight = 1024;
+                // Create axis helpers
+                var axisHelp = new THREE.AxisHelper(100);
+                scene.add(axisHelp);
 
-            directionalLight.shadowBias = -0.005;
-            directionalLight.shadowDarkness = 0.15;
+                // Create the floor
+                floor = new THREE.Mesh(
+                    new THREE.PlaneBufferGeometry( 400, 400 ),
+                    new THREE.MeshPhongMaterial( { color: 0x999999, specular: 0x101010 } )
+                );
+                floor.rotation.x = -Math.PI/2;
+                floor.position.y = -0.5;
+                floor.receiveShadow = true;
+                scene.add( floor );
 
+                // Create a cube
+                var geometry = new THREE.BoxGeometry(20,20,20);
+                var material = new THREE.MeshPhongMaterial({color:0x00ff00, specular: 0x101010});
+                cube = new THREE.Mesh(geometry, material);
+                cube.castShadow = true;
+                scene.add(cube);
 
-            var stage = document.getElementById('stage');
-            stage.appendChild(renderer.domElement);
-            //document.body.appendChild(renderer.domElement);
+                // Create lighting
+                scene.add(new THREE.AmbientLight( 0x777777));
+                createDirectionalLight($scope.light.pos, $scope.light.intensity, $scope.light.color);
+
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                render();
+                update();
+            }
+
+            function update() {
+                 cube.rotation.x += $scope.cube.rotation.x;
+                 cube.rotation.y += $scope.cube.rotation.y;
+                 cube.rotation.z += $scope.cube.rotation.z;
+
+                 cube.position.x = $scope.cube.pos.x;
+                 cube.position.y = $scope.cube.pos.y;
+                 cube.position.z = $scope.cube.pos.z;
+
+                controls.update();
+            }
+
+            function createDirectionalLight(pos, intensity, color) {
+                directionalLight = new THREE.DirectionalLight(color, intensity);
+                directionalLight.position.set(pos.x, pos.y, pos.z);
+                scene.add( directionalLight );
+
+                directionalLight.castShadow = true;
+                directionalLight.shadowCameraVisible = true;
+
+                var d = 1;
+                directionalLight.shadowCameraLeft = -d;
+                directionalLight.shadowCameraRight = d;
+                directionalLight.shadowCameraTop = d;
+                directionalLight.shadowCameraBottom = -d;
+
+                directionalLight.shadowCameraNear = 1;
+                directionalLight.shadowCameraFar = 4;
+
+                directionalLight.shadowMapWidth = 1024;
+                directionalLight.shadowMapHeight = 1024;
+
+                directionalLight.shadowBias = -0.005;
+                directionalLight.shadowDarkness = 0.15;
+
+            }
 
             function render() {
-                requestAnimationFrame( render );
-
-                cube.rotation.x += $scope.cube.rotation.x;
-                cube.rotation.y += $scope.cube.rotation.y;
-                cube.rotation.z += $scope.cube.rotation.z;
-
-                cube.position.x = $scope.cube.pos.x;
-                cube.position.y = $scope.cube.pos.y;
-                cube.position.z = $scope.cube.pos.z;
-
                 renderer.render( scene, camera );
             }
-            render();
 
             $scope.$watchCollection('light', function(newValues) {
                 console.log("updated ", angular.toJson(newValues));
