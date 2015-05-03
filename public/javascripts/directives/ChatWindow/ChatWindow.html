@@ -2,7 +2,7 @@
     <div class="col-sm-9">
         <div class="chatArea" scroll-glue>
             <ul>
-                <li ng-repeat="message in messageLog track by $index">{{message}}</li>
+                <li ng-repeat="message in messageLog track by $index">{{ message }}</li>
             </ul>
             <div id="chatBottom"></div>
         </div>
@@ -10,16 +10,18 @@
     <div class="col-sm-3">
         <div class="chatUserList">
             <ul>
-                <li ng-repeat="user in chatUsers">{{user}}</li>
+                <li ng-repeat="user in chatUsers">{{ user }}</li>
             </ul>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-9">
-        <input type="text" id="message" ng-enter="sendMessage()" ng-model="message"/>
-    </div>
-    <div class="col-sm-3">
-        <button ng-click="sendMessage()">Send</button>
+    <div class="col-sm-12">
+        <div class="input-group">
+            <input type="text" class="form-control" id="message" ng-enter="sendMessage()" ng-model="message"/>
+            <span class="input-group-btn">
+                <button class="btn btn-default" ng-click="sendMessage()">Send</button>
+            </span>
+        </div>
     </div>
 </div>

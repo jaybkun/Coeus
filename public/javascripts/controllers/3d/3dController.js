@@ -30,13 +30,13 @@
             };
 
             // Global objects
-            var container, scene, camera, renderer, controls, stats;
+            var container, scene, camera, renderer, controls;
             var keyboard = new THREEx.KeyboardState();
             var clock = new THREE.Clock();
 
             // Common objects
             var floor, cube;
-            var directionalLight;
+            var directionalLights = [];
 
             init();
             animate();
@@ -55,7 +55,7 @@
                 // Create the camera
                 camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
                 scene.add(camera);
-                camera.position.set(0, 150, 400);
+                camera.position.set(50, 50, 90);
                 camera.lookAt(scene.position);
 
                 // Create the renderer
@@ -79,7 +79,7 @@
 
                 // Create the floor
                 floor = new THREE.Mesh(
-                    new THREE.PlaneBufferGeometry( 400, 400 ),
+                    new THREE.PlaneBufferGeometry(SCREEN_WIDTH, SCREEN_WIDTH),
                     new THREE.MeshPhongMaterial( { color: 0x999999, specular: 0x101010 } )
                 );
                 floor.rotation.x = -Math.PI/2;
@@ -95,9 +95,8 @@
                 scene.add(cube);
 
                 // Create lighting
-                scene.add(new THREE.AmbientLight( 0x777777));
+                scene.fog = new THREE.FogExp2( 0x13fd25, 0.0025 );
                 createDirectionalLight($scope.light.pos, $scope.light.intensity, $scope.light.color);
-
             }
 
             function animate() {
@@ -119,7 +118,7 @@
             }
 
             function createDirectionalLight(pos, intensity, color) {
-                directionalLight = new THREE.DirectionalLight(color, intensity);
+                var directionalLight = new THREE.DirectionalLight(color, intensity);
                 directionalLight.position.set(pos.x, pos.y, pos.z);
                 scene.add( directionalLight );
 
@@ -141,6 +140,7 @@
                 directionalLight.shadowBias = -0.005;
                 directionalLight.shadowDarkness = 0.15;
 
+                directionalLights.push(directionalLight);
             }
 
             function render() {
