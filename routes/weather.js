@@ -8,13 +8,14 @@
             on('connection', function (socket) {
 
                 var updateTimer;
+                var zip = 21017;
                 socket.on('weatherUpdate:start', function(params) {
                     if (updateTimer) {
                         return;
                     }
-                    console.log(params);
-                    getWeather();
-                    updateTimer = setInterval(getWeather, 60000); // Once a minute ask for updates
+                    zip = params.zip;
+                    getWeather(zip);
+                    updateTimer = setInterval(function() { getWeather(zip); }, 60000); // Once a minute ask for updates
                 });
 
                 socket.on('weatherUpdate:stop', function() {
@@ -22,12 +23,12 @@
                     updateTimer = null;
                 });
 
-                function getWeather() {
+                function getWeather(zip) {
                     var options = {
                         host: 'api.openweathermap.org',
                         port: 80,
                         method: 'GET',
-                        path: '/data/2.5/weather?zip=21017,us'
+                        path: '/data/2.5/weather?zip=' + zip + ',us'
                     };
 
                     var req = http.request(options, function(res) {
