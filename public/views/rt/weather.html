@@ -2,22 +2,32 @@
     <div class="col-sm-4">
         <div class="row">
             <div class="col-sm-12">
-                <button ng-click="toggleWeatherUpdates()" class="expand">Toggle Weather Updates </button>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        Zip Code
+                    </span>
+                    <input type="text" class="form-control" placeholder="Enter zipcode" ng-model="zip">
+                </div>
+                <button ng-click="toggleWeatherUpdates()" class="btn btn-default form-control">Toggle Updates</button>
+
             </div>
         </div>
         <div class="row" id="lastMessage">
-            <div class="col-sm-12 text-center">
+            <div class="col-sm-12">
                 {{ lastMessage }}
             </div>
         </div>
     </div>
-    <div class="col-sm-8">
+    <div class="col-sm-8 jumbotron text-center" ng-hide="updatesEnabled">
+        <p>Weather Updates</p>
+    </div>
+    <div class="col-sm-8 jumbotron" ng-show="updatesEnabled">
         <div class="row">
             <div class="col-sm-6">Location : {{ weather.name }}</div>
             <div class="col-sm-6">Coords : {{ weather.coord.lat }}&deg; {{ weather.coord.lat > 0 ? "W" : "E"}}, {{ weather.coord.lon }}&deg; {{ weather.coord.lon > 0 ? "S" : "N"}}</div>
         </div>
         <div class="row">
-            <div class="col-sm-6">Temp : {{ weather.main.temp - 272.362 }}&deg; C</div>
+            <div class="col-sm-6">Temp : {{ (weather.main.temp - 272).toFixed(1) }}&deg;C</div>
             <div class="col-sm-6">Humidity : {{ weather.main.humidity }}%</div>
         </div>
         <div class="row">

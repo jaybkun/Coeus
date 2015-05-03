@@ -7,6 +7,7 @@
             var socket = SocketFactory.createSocket('/api/weather');
 
             $scope.commLog = [];
+            $scope.zip = 21017;
 
             socket.on('message', function (data) {
                 $scope.commLog.push(data);
@@ -29,7 +30,7 @@
                     $scope.commLog.push("updateWeather:stop");
                     fadeMessage('updateWeather:stop');
                 } else {
-                    socket.emit('weatherUpdate:start', {'zip': 21017});
+                    socket.emit('weatherUpdate:start', {'zip': $scope.zip});
                     $scope.commLog.push('updateWeather:start');
                     fadeMessage('updateWeather:start');
                 }
