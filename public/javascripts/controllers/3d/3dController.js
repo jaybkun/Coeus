@@ -1,33 +1,48 @@
-(function() {
+;(function() {
     'use strict';
 
     /**
      *
      */
     angular.module('3dControllerModule',[])
-        .controller('3dController', ['$scope', function($scope){
-            $scope.light = {
-                pos: {
-                    x: 1,
-                    y: 1,
-                    z: -1
-                },
-                color: 0xffffff,
-                intensity: 1.35
-            };
-
-            $scope.cube = {
-                pos: {
-                    x: 0,
-                    y: 1,
-                    z: 0
-                },
-                rotation: {
-                    x: 0.01,
-                    y: 0.00,
-                    z: 0.0
-                }
-            };
+        .controller('3dController', ['$scope', '$localStorage', function($scope, $localStorage){
+            $scope.$storage = $localStorage.$default({
+                directionalLights: [
+                    {
+                        name: "default light",
+                        pos: {
+                            x: 1,
+                            y: 1,
+                            z: -1
+                        },
+                        color: 0xffffff,
+                        intensity: 1.35
+                    }
+                ],
+                objects: [
+                    {
+                        name: 'The Cube',
+                        description: 'Possibly a companionable cube...',
+                        mass: 10.0,
+                        type: 'cube',
+                        dimensions: {
+                            width: 1,
+                            height: 1,
+                            depth: 1
+                        },
+                        pos: {
+                            x: 0,
+                            y: 0,
+                            z: 0
+                        },
+                        rotation: {
+                            x: 0,
+                            y: 0,
+                            z: 0
+                        }
+                    }
+                ]
+            });
 
             // Global objects
             var container, scene, camera, renderer, controls;
@@ -35,8 +50,7 @@
             var clock = new THREE.Clock();
 
             // Common objects
-            var floor, cube;
-            var directionalLights = [];
+            var floor;
 
             init();
             animate();
@@ -79,7 +93,7 @@
 
                 // Create the floor
                 floor = new THREE.Mesh(
-                    new THREE.PlaneBufferGeometry(SCREEN_WIDTH, SCREEN_WIDTH),
+                    new THREE.PlaneBufferGeometry(10 * SCREEN_WIDTH, 10 * SCREEN_WIDTH),
                     new THREE.MeshPhongMaterial( { color: 0x999999, specular: 0x101010 } )
                 );
                 floor.rotation.x = -Math.PI/2;
@@ -87,16 +101,23 @@
                 floor.receiveShadow = true;
                 scene.add( floor );
 
-                // Create a cube
-                var geometry = new THREE.BoxGeometry(20,20,20);
-                var material = new THREE.MeshPhongMaterial({color:0x00ff00, specular: 0x101010});
-                cube = new THREE.Mesh(geometry, material);
-                cube.castShadow = true;
-                scene.add(cube);
+                // Create objects
+                _.each($scope.$storage.objects, function(object) {
+                    var geometry = null;
+                    if (object.type === "cube") {
+                        geometry = new THREE.BoxGeometry(object.dimensions.length, object.dimensions.width, object.dimensions.depth);
+                    }
+                    var material = new THREE.MeshPhongMaterial({color:0x00ff00, specular: 0x101010});
+                    var obj = new THREE.Mesh(geometry, material);
+                    obj.castShadow = true;
+                    scene.add(obj);
+                });
 
                 // Create lighting
-                scene.fog = new THREE.FogExp2( 0x13fd25, 0.0025 );
-                createDirectionalLight($scope.light.pos, $scope.light.intensity, $scope.light.color);
+                scene.fog = new THREE.FogExp2( 0x13fd25, 0.0065 );
+                _.each($scope.directionalLights, function(light) {
+                    createDirectionalLight(light.pos, light.intensity, light.color);
+                });
             }
 
             function animate() {
@@ -106,13 +127,11 @@
             }
 
             function update() {
-                 cube.rotation.x += $scope.cube.rotation.x;
-                 cube.rotation.y += $scope.cube.rotation.y;
-                 cube.rotation.z += $scope.cube.rotation.z;
-
-                 cube.position.x = $scope.cube.pos.x;
-                 cube.position.y = $scope.cube.pos.y;
-                 cube.position.z = $scope.cube.pos.z;
+                _.each($scope.$storage.objects, function(object) {
+                    object.rotation.x += object.rotation.x;
+                    object.rotation.y += object.rotation.y;
+                    object.rotation.z += object.rotation.z;
+                });
 
                 controls.update();
             }
@@ -140,7 +159,8 @@
                 directionalLight.shadowBias = -0.005;
                 directionalLight.shadowDarkness = 0.15;
 
-                directionalLights.push(directionalLight);
+                $scope.$storage.directionalLights.push(directionalLight);
+                $scope.$apply();
             }
 
             function render() {
@@ -148,33 +168,20 @@
             }
 
             $scope.$watchCollection('light', function(newValues) {
-                console.log("updated ", angular.toJson(newValues));
-                directionalLight.position.x = $scope.light.x;
-                directionalLight.position.y = $scope.light.y;
-                directionalLight.position.z = $scope.light.z;
-                directionalLight.intensity = $scope.light.intensity;
+                _.each($scope.$storage.directionalLights, function(directionalLight) {
+
+                });
             });
 
-            $scope.resetLight = function() {
-                $scope.light.x = 1;
-                $scope.light.y = 1;
-                $scope.light.z = -1;
-                $scope.light.intensity = 1.35;
-            };
-
-            $scope.resetCube = function() {
-                $scope.cube = {
-                    rotation: {
-                        x: 0.01,
-                        y: 0.00,
-                        z: 0.0
-                    },
-                    pos: {
-                        x: 0,
-                        y: 1,
-                        z: 0
-                    }
-                };
+            $scope.resetLight = function(name) {
+                try {
+                    var idx = _.indexOf($scope.$storage.directionalLights, _.findWhere($scope.$storage.directionalLights, {name: name}));
+                    $scope.$storage.directionalLights[idx].x = 1;
+                    $scope.$storage.directionalLights[idx].y = 1;
+                    $scope.$storage.directionalLights[idx].z = 1;
+                } catch (err) {
+                    console.error(err);
+                }
             };
         }]);
 })();

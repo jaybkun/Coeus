@@ -1,9 +1,11 @@
-(function() {
+;(function() {
     'use strict';
 
     var app = angular.module('coeus', [
         'ui.router',
         'ngResource',
+        'ngStorage',
+        'ui.bootstrap',
         'luegg.directives',
         'CoeusControllers',
         'CoeusServices',

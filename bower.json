@@ -44,6 +44,8 @@
     "angular-scroll-glue": "~2.0.5",
     "bootstrap": "~3.3.4",
     "threex": "*",
-    "threex.keyboardstate": "*"
+    "threex.keyboardstate": "*",
+    "ngstorage": "~0.3.3",
+    "angular-bootstrap": "~0.13.0"
   }
 }
