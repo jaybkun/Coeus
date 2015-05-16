@@ -7,39 +7,21 @@
     angular.module('3dControllerModule',[])
         .controller('3dController', ['$scope', '$localStorage', function($scope, $localStorage){
             $scope.$storage = $localStorage.$default({
-                directionalLights: [
-                    {
-                        name: "default light",
-                        pos: {
-                            x: 1,
-                            y: 1,
-                            z: -1
-                        },
-                        color: 0xffffff,
-                        intensity: 1.35
-                    }
-                ],
                 objects: [
                     {
-                        name: 'The Cube',
-                        description: 'Possibly a companionable cube...',
-                        mass: 10.0,
-                        type: 'cube',
-                        dimensions: {
-                            width: 1,
-                            height: 1,
-                            depth: 1
-                        },
-                        pos: {
-                            x: 0,
-                            y: 0,
-                            z: 0
-                        },
-                        rotation: {
-                            x: 0,
-                            y: 0,
-                            z: 0
-                        }
+                        name: "The Cube",
+                        dimensions: { length: 1, width: 1, height: 1 },
+                        rotation: { x: 0, y: 0, z: 0 },
+                        position: { x: 1, y: 1, z: 1 }
+                    }
+                ],
+                directionalLights: [
+                    {
+                        name: "Default Light",
+                        position: { x: 30, y: 30, z: 10 },
+                        intensity: 1.35,
+                        color: 0x303030,
+                        target: null
                     }
                 ]
             });
@@ -69,7 +51,7 @@
                 // Create the camera
                 camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
                 scene.add(camera);
-                camera.position.set(50, 50, 90);
+                camera.position.set(5, 5, 5);
                 camera.lookAt(scene.position);
 
                 // Create the renderer
@@ -103,20 +85,22 @@
 
                 // Create objects
                 _.each($scope.$storage.objects, function(object) {
-                    var geometry = null;
-                    if (object.type === "cube") {
-                        geometry = new THREE.BoxGeometry(object.dimensions.length, object.dimensions.width, object.dimensions.depth);
-                    }
-                    var material = new THREE.MeshPhongMaterial({color:0x00ff00, specular: 0x101010});
-                    var obj = new THREE.Mesh(geometry, material);
-                    obj.castShadow = true;
-                    scene.add(obj);
+                    var geometry = new THREE.BoxGeometry(object.dimensions.length, object.dimensions.width, object.dimensions.height);
+                    var material = new THREE.MeshPhongMaterial({color: 0x00ff00, specular: 0x101010});
+                    var mesh = new THREE.Mesh(geometry, material);
+                    mesh.castShadow = true;
+                    mesh.name = object.name;
+                    mesh.position.x = object.position.x;
+                    mesh.position.y = object.position.y;
+                    mesh.position.z = object.position.z;
+                    scene.add(mesh);
                 });
 
                 // Create lighting
-                scene.fog = new THREE.FogExp2( 0x13fd25, 0.0065 );
-                _.each($scope.directionalLights, function(light) {
-                    createDirectionalLight(light.pos, light.intensity, light.color);
+                var light = new THREE.AmbientLight( 0x303030 );
+                scene.add(light);
+                _.each($scope.$storage.directionalLights, function(light) {
+                    createDirectionalLight(light.position, light.intensity, light.color);
                 });
             }
 
@@ -127,16 +111,13 @@
             }
 
             function update() {
-                _.each($scope.$storage.objects, function(object) {
-                    object.rotation.x += object.rotation.x;
-                    object.rotation.y += object.rotation.y;
-                    object.rotation.z += object.rotation.z;
-                });
+                var delta = clock.getDelta();
+                console.log(scene);
 
-                controls.update();
+                controls.update(delta);
             }
 
-            function createDirectionalLight(pos, intensity, color) {
+            function createDirectionalLight(pos, intensity, color, target) {
                 var directionalLight = new THREE.DirectionalLight(color, intensity);
                 directionalLight.position.set(pos.x, pos.y, pos.z);
                 scene.add( directionalLight );
@@ -159,29 +140,14 @@
                 directionalLight.shadowBias = -0.005;
                 directionalLight.shadowDarkness = 0.15;
 
-                $scope.$storage.directionalLights.push(directionalLight);
-                $scope.$apply();
+                if (target) {
+                    directionalLight.target = target;
+                }
             }
 
             function render() {
                 renderer.render( scene, camera );
             }
 
-            $scope.$watchCollection('light', function(newValues) {
-                _.each($scope.$storage.directionalLights, function(directionalLight) {
-
-                });
-            });
-
-            $scope.resetLight = function(name) {
-                try {
-                    var idx = _.indexOf($scope.$storage.directionalLights, _.findWhere($scope.$storage.directionalLights, {name: name}));
-                    $scope.$storage.directionalLights[idx].x = 1;
-                    $scope.$storage.directionalLights[idx].y = 1;
-                    $scope.$storage.directionalLights[idx].z = 1;
-                } catch (err) {
-                    console.error(err);
-                }
-            };
         }]);
 })();
