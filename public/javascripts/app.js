@@ -12,14 +12,8 @@
         'CoeusDirectives'
     ]);
 
-    app.run(['$rootScope', function($rootScope) {
-
-    }]);
-
     app.config(function($stateProvider, $urlRouterProvider) {
-
         $urlRouterProvider.otherwise('/home');
-
         $stateProvider
             .state('home', {
                 url: '/home',
@@ -48,9 +42,5 @@
                 controller: '3dController'
             });
     });
-
-    app.controller('CoeusMainController', ['$scope', '$resource', function($scope, $resource) {
-        $scope.git = $resource('/api/version').get();
-    }]);
 
 })();

@@ -6,25 +6,25 @@
      */
     angular.module('3dControllerModule',[])
         .controller('3dController', ['$scope', '$localStorage', function($scope, $localStorage){
+            $localStorage.$reset();
             $scope.$storage = $localStorage.$default({
-                objects: [
-                    {
-                        name: "The Cube",
-                        dimensions: { length: 1, width: 1, height: 1 },
-                        rotation: { x: 0, y: 0, z: 0 },
-                        position: { x: 1, y: 1, z: 1 }
-                    }
-                ],
-                directionalLights: [
-                    {
-                        name: "Default Light",
-                        position: { x: 30, y: 30, z: 10 },
-                        intensity: 1.35,
-                        color: 0x303030,
-                        target: null
-                    }
-                ]
+                objects: {},
+                directionalLights: {}
             });
+
+            // Default object and light
+            var defCube = {
+                name: "Companionable Cube",
+                position: {x: 2, y: 6, z: 2},
+                rotation: {x: 0.1, y: 0, z: 0},
+                size: {x: 2, y: 2, z: 2}
+            };
+            var defLight = {
+                name: "Default Light",
+                position: {x: 4, y: 8, z: 8},
+                intensity: 2.5,
+                color: 0x404040
+            };
 
             // Global objects
             var container, scene, camera, renderer, controls;
@@ -33,6 +33,7 @@
 
             // Common objects
             var floor;
+            $scope.directionalLights = {};
 
             init();
             animate();
@@ -51,7 +52,7 @@
                 // Create the camera
                 camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
                 scene.add(camera);
-                camera.position.set(5, 5, 5);
+                camera.position.set(10, 10, 7);
                 camera.lookAt(scene.position);
 
                 // Create the renderer
@@ -68,6 +69,7 @@
 
                 // Create Controls
                 controls = new THREE.OrbitControls(camera, renderer.domElement);
+                //controls = new THREE.FirstPersonControls(camera, renderer.domElement);
 
                 // Create axis helpers
                 var axisHelp = new THREE.AxisHelper(100);
@@ -84,24 +86,35 @@
                 scene.add( floor );
 
                 // Create objects
-                _.each($scope.$storage.objects, function(object) {
-                    var geometry = new THREE.BoxGeometry(object.dimensions.length, object.dimensions.width, object.dimensions.height);
+                if ($scope.$storage.objects.length > 0) {
+                    _.each($scope.$storage.objects, function(object) {
+                        scene.add(object);
+                    });
+                } else {
+                    var geometry = new THREE.BoxGeometry(defCube.size.x, defCube.size.y, defCube.size.z);
                     var material = new THREE.MeshPhongMaterial({color: 0x00ff00, specular: 0x101010});
                     var mesh = new THREE.Mesh(geometry, material);
                     mesh.castShadow = true;
-                    mesh.name = object.name;
-                    mesh.position.x = object.position.x;
-                    mesh.position.y = object.position.y;
-                    mesh.position.z = object.position.z;
+                    mesh.name = defCube.name;
+                    mesh.position.x = defCube.position.x;
+                    mesh.position.y = defCube.position.y;
+                    mesh.position.z = defCube.position.z;
+
                     scene.add(mesh);
-                });
+                    $scope.$storage.objects[mesh.id] = mesh;
+                }
 
                 // Create lighting
                 var light = new THREE.AmbientLight( 0x303030 );
                 scene.add(light);
-                _.each($scope.$storage.directionalLights, function(light) {
-                    createDirectionalLight(light.position, light.intensity, light.color);
-                });
+
+                if ($scope.$storage.directionalLights.length > 0) {
+                    _.each($scope.$storage.directionalLights, function(light) {
+                        scene.add(light);
+                    });
+                } else {
+                    createDirectionalLight(defLight.name, defLight.position, defLight.intensity, defLight.color);
+                }
             }
 
             function animate() {
@@ -112,13 +125,13 @@
 
             function update() {
                 var delta = clock.getDelta();
-                console.log(scene);
 
                 controls.update(delta);
             }
 
-            function createDirectionalLight(pos, intensity, color, target) {
+            function createDirectionalLight(name, pos, intensity, color, target) {
                 var directionalLight = new THREE.DirectionalLight(color, intensity);
+                directionalLight.name = name;
                 directionalLight.position.set(pos.x, pos.y, pos.z);
                 scene.add( directionalLight );
 
@@ -143,11 +156,25 @@
                 if (target) {
                     directionalLight.target = target;
                 }
+
+                $scope.$storage.directionalLights[directionalLight.id] = directionalLight;
             }
 
             function render() {
                 renderer.render( scene, camera );
             }
+
+            $scope.$watch('directionalLights', function(updates) {
+
+            });
+
+            $scope.resetLight = function(name) {
+
+            };
+
+            $scope.resetAll = function() {
+                $localStorage.$reset();
+            };
 
         }]);
 })();

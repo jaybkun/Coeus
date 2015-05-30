@@ -7,23 +7,23 @@
     <div class="col-sm-4">
         <span class="label label-primary">Light Controls</span>
         <accordion>
-            <accordion-group heading="{{light.name}}" is-open="$index === 0" ng-repeat="light in $storage.directionalLights track by $index">
+            <accordion-group heading="{{light.name}}" is-open="true" ng-repeat="light in $storage.directionalLights track by $index">
                 <form class="light-controls">
                     <div class="input-group">
                         <span class="input-group-addon">X</span>
-                        <input id="light_x" type="number" class="form-control" step="0.01" data-ng-model="light.pos.x">
+                        <input id="light_x" type="number" class="form-control" step="0.1" ng-model="light.position.x"/>
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Y</span>
-                        <input id="light_y" type="number" class="form-control" step="0.01" data-ng-model="light.pos.y">
+                        <input id="light_y" type="number" class="form-control" step="0.1" ng-model="light.position.y"/>
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Z</span>
-                        <input id="light_z" type="number" class="form-control" step="0.01" data-ng-model="light.pos.z">
+                        <input id="light_z" type="number" class="form-control" step="0.1" ng-model="light.position.z"/>
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">Intensity</span>
-                        <input id="light_intensity" type="number" class="form-control" step="0.01" data-ng-model="light.intensity">
+                        <input id="light_intensity" type="number" class="form-control" step="0.1" ng-model="light.intensity"/>
                     </div>
                     <div class="input-group-btn">
                         <button type="button" class="btn btn-default" data-ng-click="resetLight(light.name)">Reset</button>
